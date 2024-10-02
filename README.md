@@ -1,7 +1,7 @@
 # MapReduce implementation in Java using jeroMQ(ZeroMQ)
 
 ## Table of contents
-* [About](About)
+* [About](#About)
 * [Features]
 * [Tools]
 * [Getting Started]
