@@ -2,9 +2,9 @@
 
 ## Table of contents
 * [About](#About)
-* [Features]
-* [Tools]
-* [Getting Started]
+* [Features](*Features)
+* [Tools](*Tools)
+* [Getting Started](*Getting-Started)
 * [Running the Application]
 * [Usage]
 * [Feedback]
@@ -23,3 +23,21 @@ This project is a Java-based implementation of the MapReduce programming model, 
   - **Reducer Nodes**: Aggregate results from multiple worker nodes and provide a final count of each word.
   - **Router**: Acts as a load balancer, directing messages between workers and reducers to ensure efficient processing and communication.
 - **Real-Time Processing**: Supports real-time task distribution and result aggregation.
+
+## Tools
+- **Programming Language**: Java
+- **Messaging Library**: [JeroMQ](https://github.com/zeromq/jeromq) for inter-process communication
+- **Build Tool**: Maven for dependency management and building the project
+- **Development Environment**: IntelliJ IDEA for coding and debugging
+
+## Getting Started
+### Prerequisites
+To run this project, you need:
+- **Java Development Kit (JDK) 11 or higher**: Ensure it's installed and configured in your environment.
+- **Maven**: This project uses Maven for dependency management. You can download Maven from [Maven's official website](https://maven.apache.org/download.cgi) and follow the installation instructions there.
+- **JeroMQ Library**: Download the required JAR file and place it in the `lib` directory.
+
+### Installation Instructions
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
