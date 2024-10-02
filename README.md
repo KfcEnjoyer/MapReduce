@@ -49,11 +49,12 @@ To run this project, you need:
 ## Running the Application
 ### There are 3 ways to start the app;ication:
 1. Start the each file manually
+ #### **This is the most complicated way**
  * 1 masterNode.java
  * 3 workerNode.java
  * 2 reducerNode.java
  * 1 Router.java
-#### **This is the most complicated way**
+
 2. Start the Main.java
     1. Start the masterNode1 it will start all the mappers and reducers as well as the router in separate command terminals. 
        * You can adjust the ammount of workers and reducers.
