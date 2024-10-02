@@ -53,7 +53,7 @@ To run this project, you need:
  * 3 workerNode.java
  * 2 reducerNode.java
  * 1 Router.java
-This is the most complicated way
+- This is the most complicated way
 2. Start the Main.java
     1. Start the masterNode1 it will start all the mappers and reducers as well as the router in separate command terminals. 
        * You can adjust the ammount of workers and reducers.
