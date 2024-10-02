@@ -1,15 +1,15 @@
 # MapReduce implementation in Java using jeroMQ(ZeroMQ)
 
 ## Table of contents
-* [About](#About)
-* [Features](#Features)
-* [Tools](#Tools)
-* [Getting Started](#Getting-Started)
-* [Running the Application]
-* [Usage]
-* [Feedback]
-* [License]
-* [Contacts]
+* [About](#about)
+* [Features](#features)
+* [Tools](#tools)
+* [Getting Started](#getting-started)
+* [Running the Application](#running-the-application)
+* [Usage](#usage)
+* [Feedback](#feedback)
+* [License](#license)
+* [Contacts](#contacts)
 
 ## About
 This project is a Java-based implementation of the MapReduce programming model, designed for distributed computing. It allows users to process large datasets across a cluster of machines efficiently. The primary function of this implementation is to count the occurrences of words in a text document, showcasing how data can be processed in parallel using multiple worker nodes.
@@ -41,3 +41,34 @@ To run this project, you need:
 1. Clone the repository:
    ```bash
    git clone https://github.com/KfcEnjoyer/MapReduce
+2. Navigate to the project directory:
+   ```bash
+   cd MapReduce
+### Maven Configuration: The project uses a pom.xml file located in the root directory for managing dependencies and build configurations. Ensure that the pom.xml includes all necessary dependencies, including JeroMQ.
+
+## Running the Application
+1. Start the each file manually 1 masterNode.java, 3 workerNode.java, 2 reducerNode.java and 1 Router.java
+   This is the most complicated way
+2. Start the Main.java
+   - **Start the masterNode1, it will start all the mappers and reducers as well as the router in separate command terminals. 
+     --**You can adjust the ammount of workers and reducers.
+   - **Start the masterNode2, it will start all the mappers and reducers as well as the router in separate terminals in the background.
+     --**You can adjust the ammount of workers and reducers.
+     --**It will kill all the processes in the end.
+
+## Usage
+1. **Prepare Input Data**: Create a text file with content you want to analyze.
+2. **Start the Application**: Run the application as described above.
+3. **Follow Prompts**: Enter the number of workers and reducers, then input the path to your text file.
+4. **View Results**: The program will output the count of words processed, including the option to search for specific words.
+
+## Feedback
+We welcome your feedback! If you encounter any issues or have suggestions for improvements, please feel free to reach out or submit an issue on the project repository.
+
+## License
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+## Contacts
+- **Author**: Alikhan Azanbayev
+- **Email**: alihan1azanbaev@gmail.com
+- **GitHub**: @KfcEnjoyer
