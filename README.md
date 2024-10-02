@@ -47,14 +47,19 @@ To run this project, you need:
 ### Maven Configuration: The project uses a pom.xml file located in the root directory for managing dependencies and build configurations. Ensure that the pom.xml includes all necessary dependencies, including JeroMQ.
 
 ## Running the Application
-1. Start the each file manually 1 masterNode.java, 3 workerNode.java, 2 reducerNode.java and 1 Router.java
-   This is the most complicated way
+### There are 3 ways to start the app;ication:
+1. Start the each file manually
+ * 1 masterNode.java
+ * 3 workerNode.java
+ * 2 reducerNode.java
+ * 1 Router.java
+  This is the most complicated way
 2. Start the Main.java
-   - **Start the masterNode1, it will start all the mappers and reducers as well as the router in separate command terminals. 
-     --**You can adjust the ammount of workers and reducers.
-   - **Start the masterNode2, it will start all the mappers and reducers as well as the router in separate terminals in the background.
-     --**You can adjust the ammount of workers and reducers.
-     --**It will kill all the processes in the end.
+    1. Start the masterNode1 it will start all the mappers and reducers as well as the router in separate command terminals. 
+       * You can adjust the ammount of workers and reducers.
+    2. Start the masterNode2, it will start all the mappers and reducers as well as the router in separate terminals in the background.
+       * You can adjust the ammount of workers and reducers.
+       * It will kill all the processes in the end.
 
 ## Usage
 1. **Prepare Input Data**: Create a text file with content you want to analyze.
