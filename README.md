@@ -8,7 +8,7 @@
 * [Running the Application](#running-the-application)
 * [Usage](#usage)
 * [Feedback](#feedback)
-* [License](#license)
+* [License](*license)
 * [Contacts](#contacts)
 
 ## About
