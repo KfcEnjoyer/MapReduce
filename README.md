@@ -2,9 +2,9 @@
 
 ## Table of contents
 * [About](#About)
-* [Features](*Features)
-* [Tools](*Tools)
-* [Getting Started](*Getting-Started)
+* [Features](#Features)
+* [Tools](#Tools)
+* [Getting Started](#Getting-Started)
 * [Running the Application]
 * [Usage]
 * [Feedback]
