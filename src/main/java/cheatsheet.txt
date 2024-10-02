@@ -1,0 +1,8 @@
+//    public static String removeFillers(String input){
+//        String pure = input.toLowerCase();;
+//        pure = pure.replace(".", "");
+//        pure = pure.replace(",", "");
+//        pure = pure.replaceAll("\\b( or | of | the | a | in | is | and | for | to | at | are )\\b", " ");
+//
+//        return pure;
+//    }
