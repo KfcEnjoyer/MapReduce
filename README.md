@@ -40,4 +40,4 @@ To run this project, you need:
 ### Installation Instructions
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone <[repository-url](https://github.com/KfcEnjoyer/MapReduce)>
