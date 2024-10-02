@@ -1,3 +1,6 @@
+//There are 3 masterNodes and most of the code is the same so I have comments on masterNode.java please check there
+//I will add additional comments here where needed
+
 package com.master;
 
 import org.zeromq.*;
@@ -28,17 +31,15 @@ public class masterNode1 {
 
         System.out.println("Now, we need to start worker/mapper nodes");
         System.out.println("Please, specify how many worker nodes do you want to start?");
-        List<Process> mappersList = new ArrayList<>();
 
-        int mappers = scanner.nextInt();
+        int mappers = scanner.nextInt(); //Int for choosing ammount of mappers
 
-        for (int i = 1; i<=mappers;i++){
+        for (int i = 1; i<=mappers;i++){ //start mappers using processbuilder in the separate cmds
             try {
                 ProcessBuilder processBuilder = new ProcessBuilder(
                         "cmd.exe", "/c", "start", "java", "-cp", "src/main/java;src/lib/jeromq-0.6.0.jar", "com.worker.workerNode", String.valueOf(i)
                 );
-                Process process = processBuilder.start();
-                mappersList.add(process);
+                processBuilder.start();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -46,17 +47,15 @@ public class masterNode1 {
 
         System.out.println("Now, we need to start reducer nodes");
         System.out.println("Please, specify how many reducer nodes do you want to start?");
-        List<Process> reducersList = new ArrayList<>();
 
-        int reducers = scanner.nextInt();
+        int reducers = scanner.nextInt(); //Int for choosing ammount of reducers
 
-        for (int i = 1; i<=reducers;i++){
+        for (int i = 1; i<=reducers;i++){ //start reducers using processbuilder in the separate cmds
             try {
                 ProcessBuilder processBuilder = new ProcessBuilder(
                         "cmd.exe", "/c", "start", "java", "-cp", "src/main/java;src/lib/jeromq-0.6.0.jar", "com.reducer.reducerNode", String.valueOf(i)
                 );
-                Process process = processBuilder.start();
-                reducersList.add(process);
+                processBuilder.start();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -64,13 +63,12 @@ public class masterNode1 {
 
         System.out.println("Now, we need to start the router");
 
-        Process router = null;
 
-        try {
+        try { //start the router using processbuilder in the separate cmd
                 ProcessBuilder processBuilder = new ProcessBuilder(
                         "cmd.exe", "/c", "start", "java", "-cp", "src/main/java;src/lib/jeromq-0.6.0.jar", "com.router.Router"
                 );
-                router = processBuilder.start();
+               processBuilder.start();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -81,7 +79,7 @@ public class masterNode1 {
         String send = scanner.nextLine();
         send = send.toLowerCase();
 
-        while (!send.equals("send")){
+        while (!send.equals("send")){ //check if the input is 'send'
             System.out.println("Now enter 'send' to send chunks to workers/mappers");
             send = scanner.nextLine();
             send = send.toLowerCase();
@@ -139,10 +137,6 @@ public class masterNode1 {
             reducerResults.add(result);
         }
 
-        killProcesses(mappersList);
-        killProcesses(reducersList);
-        killProcess(router);
-
         for (String result : reducerResults){
             String[] spread = result.split(" ");
             if (spread.length < 2){
@@ -168,7 +162,7 @@ public class masterNode1 {
                 }
                 System.out.println();
                 System.out.println("Now provide the output you want to see: ");
-                System.out.println("1: To show the each word" + "\n" + "2: To see how many words in total" + "\n" + "3: To see a specific word");
+                System.out.println("1: To show the each word" + "\n" + "2: To see how many words in total" + "\n" + "3: To see a specific word " + "\n" + "Or 0 to stop the program");
             } else if (choice == 2) {
                 int words = 0;
                 for (int sum : finalResult.values()) {
@@ -178,7 +172,7 @@ public class masterNode1 {
                 System.out.println("There are " + words + " words!");
                 System.out.println();
                 System.out.println("Now provide the output you want to see: ");
-                System.out.println("1: To show the each word" + "\n" + "2: To see how many words in total" + "\n" + "3: To see a specific word");
+                System.out.println("1: To show the each word" + "\n" + "2: To see how many words in total" + "\n" + "3: To see a specific word " + "\n" + "Or 0 to stop the program");
             } else if (choice == 3) {
                 scanner.nextLine();
                 System.out.println("Please enter the keyword: ");
@@ -192,10 +186,10 @@ public class masterNode1 {
                 }
                 System.out.println();
                 System.out.println("Now provide the output you want to see: ");
-                System.out.println("1: To show the each word" + "\n" + "2: To see how many words in total" + "\n" + "3: To see a specific word");
+                System.out.println("1: To show the each word" + "\n" + "2: To see how many words in total" + "\n" + "3: To see a specific word " + "\n" + "Or 0 to stop the program");
             }else {
                 System.out.println("Now provide the output you want to see: ");
-                System.out.println("1: To show the each word" + "\n" + "2: To see how many words in total" + "\n" + "3: To see a specific word");
+                System.out.println("1: To show the each word" + "\n" + "2: To see how many words in total" + "\n" + "3: To see a specific word " + "\n" + "Or 0 to stop the program");
             }
 
             choice = scanner.nextInt();
@@ -228,19 +222,6 @@ public class masterNode1 {
         return chunks;
     }
 
-    public static void killProcess(Process process) {
-        if (process != null && process.isAlive()) {
-            process.destroy();
-            System.out.println("Process destroyed");
-        }
-    }
-
-    public static void killProcesses(List<Process> processes) {
-        for (Process process : processes) {
-                process.destroy();
-                System.out.println("Process destroyed" + process);
-        }
-}
 
 }
 

@@ -9,53 +9,53 @@ import java.util.Map;
 
 public class reducerNode {
     public static void main(String[] args) throws Exception {
-        ZMQ.Context context = ZMQ.context(5);
-        ZMQ.Socket receiver = context.socket(ZMQ.PULL);
-        receiver.connect("tcp://localhost:5557");
+        ZMQ.Context context = ZMQ.context(5); //create the context
+        ZMQ.Socket receiver = context.socket(ZMQ.PULL); //create the receiver with PULL connection
+        receiver.connect("tcp://localhost:5557"); //connect to the dealer
 
         ZMQ.Socket responder = context.socket(SocketType.PUSH);
-        responder.connect("tcp://localhost:5558");
+        responder.connect("tcp://localhost:5558"); //connect to the master
 
 
-        if (args.length == 0){
+        if (args.length == 0){ //checking if master assigned the id to the worker as asrg
             System.out.println("No identification was provided by the master!");
-            String id = "DefaultWorker";
-            System.out.println("Reducer with id: " + id + " is running");
+            String id = "DefaultReducer";
+            System.out.println("Reducer with id: " + id + " is running"); //if not then assign DefaultReducer
         }else {
             String id = args[0];
-            System.out.println("Reducer with id: " + id + " is running");
+            System.out.println("Reducer with id: " + id + " is running"); //if yes then assign the id
         }
 
-        Map<String, Integer> finalWordCount = new HashMap<>();
+        Map<String, Integer> finalWordCount = new HashMap<>(); //create the map to store the results
 
 
-        while (true) {
-            String result = receiver.recvStr(0);
+        while (true) { //listen for the results from the dealer
+            String result = receiver.recvStr(0); //get the results
             System.out.println("Received message");
-            if (result.equals("STOP")) {
-                receiver.close();
+            if (result.equals("STOP")) { //check for the STOP message
+                receiver.close(); //close the reciver for each reducer after it gets the STOP message
                 System.out.println("Received STOP");
-                for (Map.Entry<String, Integer> entry : finalWordCount.entrySet()) {
-                    System.out.println(entry.getKey() + ": " + entry.getValue());
-                    responder.send(entry.getKey() + ": " + entry.getValue());
+                for (Map.Entry<String, Integer> entry : finalWordCount.entrySet()) { //send the results to the master as a String via iterating through the map
+//                    System.out.println(entry.getKey() + ": " + entry.getValue());
+                    responder.send(entry.getKey() + ": " + entry.getValue()); //send the results to the master as a String via iterating through the map
                     System.out.println("Sent map");
-                    Thread.sleep(50);
+                    Thread.sleep(50); //sleep for prevention of packet loss
                 }
-                responder.send("STOP");
+                responder.send("STOP"); //send the STOP to the master
                 System.out.println("Sent STOP");
-                break;
+                break; //break the loop
             }
 
 
 
-            String[] parts = result.split(" ");
-            String word = parts[0];
-            int count = Integer.parseInt(parts[1]);
+            String[] parts = result.split(" "); //split the results from the mappers to the array of strings divided by space
+            String word = parts[0]; //this are the words(key) from the map
+            int count = Integer.parseInt(parts[1]); //this is the count(value) from the map
 
             if (finalWordCount.containsKey(word)) {
-                finalWordCount.put(word, finalWordCount.get(word) + count);
+                finalWordCount.put(word, finalWordCount.get(word) + count); //check if the map has the word from the previous result and add the previous count of the word to the current count
             } else {
-                finalWordCount.put(word, count);
+                finalWordCount.put(word, count); //if not then put the current count
             }
 
 

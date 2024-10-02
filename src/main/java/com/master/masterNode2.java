@@ -1,3 +1,7 @@
+//There are 3 masterNodes and most of the code is the same so I have comments on masterNode.java please check there
+//I will add additional comments here where needed
+//Mostly the same as masterNode1 but starts the processes in the background
+
 package com.master;
 
 import org.zeromq.*;
@@ -39,6 +43,7 @@ public class masterNode2 {
                 processBuilder.redirectOutput(new File("worker" + i + ".log"));
                 processBuilder.redirectErrorStream(true);
                 Process process = processBuilder.start();
+                mappersList.add(process);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -57,7 +62,8 @@ public class masterNode2 {
                 );
                 processBuilder.redirectOutput(new File("reducer" + i + ".log"));
                 processBuilder.redirectErrorStream(true);
-                processBuilder.start();
+                Process process = processBuilder.start();
+                reducersList.add(process);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -143,9 +149,9 @@ public class masterNode2 {
 
         }
 
-        killProcesses(mappersList);
-        killProcesses(reducersList);
-        killProcess(router);
+        killProcesses(mappersList); //kill all the mappers
+        killProcesses(reducersList); //kill all the reducers
+        killProcess(router); //kill the router
 
         for (String result : reducerResults){
             String[] spread = result.split(" ");
@@ -170,7 +176,7 @@ public class masterNode2 {
                 }
                 System.out.println();
                 System.out.println("Now provide the output you want to see: ");
-                System.out.println("1: To show the each word" + "\n" + "2: To see how many words in total" + "\n" + "3: To see a specific word");
+                System.out.println("1: To show the each word" + "\n" + "2: To see how many words in total" + "\n" + "3: To see a specific word " + "\n" + "Or 0 to stop the program");
             } else if (choice == 2) {
                 int words = 0;
                 for (int sum : finalResult.values()) {
@@ -180,7 +186,7 @@ public class masterNode2 {
                 System.out.println("There are " + words + " words!");
                 System.out.println();
                 System.out.println("Now provide the output you want to see: ");
-                System.out.println("1: To show the each word" + "\n" + "2: To see how many words in total" + "\n" + "3: To see a specific word");
+                System.out.println("1: To show the each word" + "\n" + "2: To see how many words in total" + "\n" + "3: To see a specific word " + "\n" + "Or 0 to stop the program");
             } else if (choice == 3) {
                 scanner.nextLine();
                 System.out.println("Please enter the keyword: ");
@@ -194,10 +200,10 @@ public class masterNode2 {
                 }
                 System.out.println();
                 System.out.println("Now provide the output you want to see: ");
-                System.out.println("1: To show the each word" + "\n" + "2: To see how many words in total" + "\n" + "3: To see a specific word");
+                System.out.println("1: To show the each word" + "\n" + "2: To see how many words in total" + "\n" + "3: To see a specific word " + "\n" + "Or 0 to stop the program");
             }else {
                 System.out.println("Now provide the output you want to see: ");
-                System.out.println("1: To show the each word" + "\n" + "2: To see how many words in total" + "\n" + "3: To see a specific word");
+                System.out.println("1: To show the each word" + "\n" + "2: To see how many words in total" + "\n" + "3: To see a specific word " + "\n" + "Or 0 to stop the program");
             }
 
             choice = scanner.nextInt();
@@ -216,37 +222,33 @@ public class masterNode2 {
         List<String> chunks = new ArrayList<>();
         StringBuilder chunk = new StringBuilder();
 
-        // Distribute the words across the chunks
         for (int i = 0; i < words.length; i++) {
             chunk.append(words[i]).append(" ");
 
-            // Add chunk to the list when it's full or at the last word
             if ((i + 1) % chunkSize == 0 || i == words.length - 1) {
                 chunks.add(chunk.toString().trim());
-                chunk.setLength(0);  // Clear the StringBuilder for the next chunk
+                chunk.setLength(0);
             }
         }
 
         return chunks;
     }
 
-    public static void killProcess(Process process) {
-        if (process != null && process.isAlive()) {
-            process.destroy();
-            System.out.println("Process destroyed");
+    public static void killProcess(Process process) { //function just to kill the process
+        if (process != null && process.isAlive()){ //check if process is still up
+            process.destroy(); //kill the process
+            System.out.println("Process destroyed: " + process.toString());
         }
     }
 
-    public static void killProcesses(List<Process> processes) {
-        for (Process process : processes) {
-            if (process != null && process.isAlive()) {
-                process.destroy();
-                System.out.println("Process destroyed");
+    public static void killProcesses(List<Process> processList) { //function just to kill the processes
+        for (Process process : processList) { //iterate through processes to destroy them
+            if (process != null && process.isAlive()){ //check if process is still up
+                process.destroy(); //kill the process
+                System.out.println("Process destroyed: " + process.toString());
             }
         }
     }
-
-
 
 }
 
